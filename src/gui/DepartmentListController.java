@@ -57,7 +57,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 	private ObservableList<Department> obsList;
 
 	@FXML
-	public void onBtnNewAction(ActionEvent event) {
+	public void onBtNewAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
 		Department obj = new Department();
 		createDialogForm(obj, "/gui/DepartmentForm.fxml", parentStage);
@@ -110,7 +110,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			dialogStage.showAndWait();
 		} catch (IOException e) {
-			Alerts.showAlert("IOException", "Error loading view", e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
 	}
 
@@ -122,7 +122,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 	private void initEditButtons() {
 		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnEDIT.setCellFactory(param -> new TableCell<Department, Department>() {
-			private final Button button = new Button("Edit");
+			private final Button button = new Button("edit");
 
 			@Override
 			protected void updateItem(Department obj, boolean empty) {
@@ -141,7 +141,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnREMOVE.setCellFactory(param -> new TableCell<Department, Department>() {
-			private final Button button = new Button("Remove");
+			private final Button button = new Button("remove");
 
 			@Override
 			protected void updateItem(Department obj, boolean empty) {
@@ -157,8 +157,8 @@ public class DepartmentListController implements Initializable, DataChangeListen
 	}
 
 	private void removeEntity(Department obj) {
-		Optional<ButtonType> result = Alerts.showConfirmation("Confirmation", "Are you sure to delete?");
-		
+		Optional<ButtonType> result = Alerts.showConfirmation("Confirmation", "Are you sure to delete ?");
+
 		if (result.get() == ButtonType.OK) {
 			if (service == null) {
 				throw new IllegalStateException("Service was null");
@@ -167,7 +167,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
 				service.remove(obj);
 				updateTableView();
 			}
-			catch(DbIntegrityException e) {
+			catch (DbIntegrityException e) {
 				Alerts.showAlert("Error removing object", null, e.getMessage(), AlertType.ERROR);
 			}
 		}
